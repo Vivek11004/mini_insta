@@ -19,23 +19,14 @@ def get_db():
     finally:
         db.close()
 
+from app.utils.jwt import decode_token
+
 def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: str | None = payload.get("sub")
-        if user_id is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid token"
-            )
-    except Exception:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token"
-        )
+    payload = decode_token(token)
+    user_id = payload["sub"]
 
     user = db.query(User).filter(User.id == int(user_id)).first()
     if not user:

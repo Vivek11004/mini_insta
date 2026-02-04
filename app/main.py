@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
 from app.models import User, Post, Like
-from app.routers import auth, post,like,feed, posts
+from app.routers import auth, comment, post,like,feed, posts, ws
 
 app = FastAPI(title="Mini Instagram Backend")
 
@@ -20,7 +20,9 @@ app.include_router(auth.router)
 app.include_router(post.router)
 app.include_router(like.router)
 app.include_router(feed.router)  
-app.include_router(posts.router)   
+app.include_router(posts.router) 
+app.include_router(comment.router)  
+app.include_router(ws.router)
 
 @app.on_event("startup")
 def on_startup():

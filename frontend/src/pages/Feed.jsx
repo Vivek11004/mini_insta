@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../api/client";
 import PostCard from "../components/PostCard";
 import CreatePost from "../components/CreatePost";
+import { connectNotifications } from "../ws";   // 👈 add this
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -28,8 +29,9 @@ export default function Feed() {
   }
 
   useEffect(() => {
-    loadFeed();
-  }, []);
+  loadFeed();
+  connectNotifications();   // 🔔 connect once
+}, []);
 
   if (error) return <p>{error}</p>;
 
