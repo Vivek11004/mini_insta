@@ -8,7 +8,7 @@ export function connectNotifications() {
   const token = localStorage.getItem("token");
   if (!token) return null;
 
-  ws = new WebSocket(`ws://localhost:8000/ws/notifications?token=${token}`);
+  ws = new WebSocket(`wss://mini-insta-backend-s8l3.onrender.com/ws/notifications?token=${token}`);
 
   ws.onopen = () => console.log("🔔 WS connected");
 

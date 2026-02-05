@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "https://mini-insta-backend-s8l3.onrender.com";
 
 export function getToken() {
   return localStorage.getItem("token");
